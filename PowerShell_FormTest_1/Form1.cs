@@ -16,7 +16,7 @@ namespace PowerShell_FormTest_1
 
     public partial class Form1 : Form
     {
-        public string verze = "1.3a";
+        public string verze = "1.3b";
         public Form1()
         {
             InitializeComponent();
@@ -309,6 +309,7 @@ namespace PowerShell_FormTest_1
                     using (var powerShell = PowerShell.Create())
                     {
                         richTextBox1.Text += Environment.NewLine + "(Hledám uživatele podle jména)";
+                        richTextBox1.Text += Environment.NewLine + user1.userNameAcco;
 
                         //Get-ADUser -filter 'sAMAccountName -like $ADuser' -Properties PhysicalDeliveryOfficeName, title, sAMAccountName | Format-table Name, sAMAccountName,PhysicalDeliveryOfficeName, Title
                         powerShell.Runspace = runspace;
@@ -348,7 +349,8 @@ namespace PowerShell_FormTest_1
                 {
                     using (var powerShell = PowerShell.Create())
                     {
-                        richTextBox1.Text += Environment.NewLine + "(Hledám uživatele podle jména)";
+                        richTextBox1.Text += Environment.NewLine + "(Hledám uživatele podle karty)";
+                        richTextBox1.Text += Environment.NewLine + user1.cardNumberFull;
 
                         //Get-ADUser -filter 'sAMAccountName -like $ADuser' -Properties PhysicalDeliveryOfficeName, title, sAMAccountName | Format-table Name, sAMAccountName,PhysicalDeliveryOfficeName, Title
                         powerShell.Runspace = runspace;
@@ -367,7 +369,7 @@ namespace PowerShell_FormTest_1
                             try { user1.tel = result.Members["TelephoneNumber"].Value.ToString(); } catch { }
                             try { user1.mob = result.Members["mobile"].Value.ToString(); } catch { }
                         }
-                        richTextBox1.Text += Environment.NewLine + "(Hledani uživatele podle jména dokončeno.)";
+                        richTextBox1.Text += Environment.NewLine + "(Hledani uživatele podle karty dokončeno.)";
                         powerShell.Runspace.Close();
                     }
                 }
