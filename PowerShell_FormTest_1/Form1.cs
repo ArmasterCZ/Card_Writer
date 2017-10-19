@@ -16,7 +16,7 @@ namespace PowerShell_FormTest_1
 
     public partial class Form1 : Form
     {
-        public string verze = "1.3a";
+        public string verze = "1.5";
         public Form1()
         {
             InitializeComponent();
@@ -25,10 +25,13 @@ namespace PowerShell_FormTest_1
             toolTip1.SetToolTip(this.textBox_Name, "Zadej jméno uživatele.");
             toolTip1.SetToolTip(this.textBox_PreCard, "Zadej číslo karty v desítkové soustavě.");
             this.Text = "PowerShell - Card Writer V" + verze;
-            
+
             //TODO: zaskrtavatko usnadneni (automaticke odskrtavani v navaznosti na zašktnutí)
             //úprava pro skupiny. (členi, poznámka, jméno)
             //zaskrtavatko na vypsani spusteneho skriptu. (mozna misto spusteni) = pomoc pokud by skript nesel spoustet mimo powershell
+            //po zaškrtnutí přehodit kurzor do kolonky
+            //upravit zadávání více karet (výstup: 81AE04C30000081C;81AE04C300000706) pořeba udělat vstup a výstup z pole (pro každého člena přepočet a PS skript), upravit detekci délky.
+
         }
 
         //tlačítka
@@ -191,6 +194,19 @@ namespace PowerShell_FormTest_1
             if (Xname & XpreCard)
             {
                 checkBox_Name.Checked = false;
+            }
+        }
+
+        private void button_cleanCard_Click(object sender, EventArgs e)
+        {
+            ADuser_Class user1 = new ADuser_Class();
+            string accountName = textBox_Name.Text;
+            if(accountName != "") {
+                user1.userNameAcco = accountName;
+                PS_ClearCard_userName(user1);
+            }
+            else {
+                MessageBox.Show("Doplň jméno.");
             }
         }
 
@@ -434,6 +450,35 @@ namespace PowerShell_FormTest_1
             }
         }
 
+        private void PS_ClearCard_userName(ADuser_Class user1)
+        {
+            //spustí PowerShell script na vymazání čísla karty.
+
+            using (var runspace = RunspaceFactory.CreateRunspace())
+            {
+                using (var powerShell = PowerShell.Create())
+                {
+                    richTextBox1.Text = "(Mazání karty uživatele)";
+                    powerShell.Runspace = runspace;
+                    powerShell.Runspace.Open();
+                    powerShell.AddScript("Set-ADUser -Identity " + '"' + user1.userNameAcco + '"' + " -Clear pager,otherPager");
+
+                    // Výsledky
+                    powerShell.Invoke();
+
+                    if (powerShell.HadErrors)
+                    {
+                        richTextBox1.Text += Environment.NewLine + "(Errors = " + powerShell.HadErrors + ")";
+                    }
+                    else
+                    {
+                        richTextBox1.Text += Environment.NewLine + "(Mazání karty uživatele dokončeno)";
+                    }
+                    powerShell.Runspace.Close();
+                }
+            }
+        }
+
         //Testovací část
 
         private void PS_TestScript()
@@ -663,5 +708,6 @@ namespace PowerShell_FormTest_1
             //PS_TestScript2();
             PS_TestScriptAD2();
         }
+
     }
 }

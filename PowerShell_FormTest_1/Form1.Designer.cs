@@ -58,6 +58,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.button_test2 = new System.Windows.Forms.Button();
             this.button_test3 = new System.Windows.Forms.Button();
+            this.button_cleanCard = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button_comfirm
@@ -65,7 +66,7 @@
             this.button_comfirm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button_comfirm.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.button_comfirm.Location = new System.Drawing.Point(440, 329);
-            this.button_comfirm.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_comfirm.Margin = new System.Windows.Forms.Padding(2);
             this.button_comfirm.Name = "button_comfirm";
             this.button_comfirm.Size = new System.Drawing.Size(56, 19);
             this.button_comfirm.TabIndex = 6;
@@ -79,7 +80,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBox1.Location = new System.Drawing.Point(9, 240);
-            this.richTextBox1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.richTextBox1.Margin = new System.Windows.Forms.Padding(2);
             this.richTextBox1.Name = "richTextBox1";
             this.richTextBox1.Size = new System.Drawing.Size(488, 73);
             this.richTextBox1.TabIndex = 10;
@@ -89,7 +90,7 @@
             // 
             this.button_clean.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.button_clean.Location = new System.Drawing.Point(9, 329);
-            this.button_clean.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_clean.Margin = new System.Windows.Forms.Padding(2);
             this.button_clean.Name = "button_clean";
             this.button_clean.Size = new System.Drawing.Size(56, 19);
             this.button_clean.TabIndex = 9;
@@ -100,7 +101,7 @@
             // textBox_Name
             // 
             this.textBox_Name.Location = new System.Drawing.Point(26, 32);
-            this.textBox_Name.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox_Name.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_Name.Name = "textBox_Name";
             this.textBox_Name.Size = new System.Drawing.Size(197, 20);
             this.textBox_Name.TabIndex = 1;
@@ -109,7 +110,7 @@
             // 
             this.textBox_PreCard.Enabled = false;
             this.textBox_PreCard.Location = new System.Drawing.Point(302, 32);
-            this.textBox_PreCard.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox_PreCard.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_PreCard.Name = "textBox_PreCard";
             this.textBox_PreCard.Size = new System.Drawing.Size(195, 20);
             this.textBox_PreCard.TabIndex = 3;
@@ -146,7 +147,7 @@
             this.checkBox_Name.Checked = true;
             this.checkBox_Name.CheckState = System.Windows.Forms.CheckState.Checked;
             this.checkBox_Name.Location = new System.Drawing.Point(8, 32);
-            this.checkBox_Name.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBox_Name.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox_Name.Name = "checkBox_Name";
             this.checkBox_Name.Size = new System.Drawing.Size(15, 14);
             this.checkBox_Name.TabIndex = 11;
@@ -157,7 +158,7 @@
             // 
             this.checkBox_PreCard.AutoSize = true;
             this.checkBox_PreCard.Location = new System.Drawing.Point(284, 32);
-            this.checkBox_PreCard.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBox_PreCard.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox_PreCard.Name = "checkBox_PreCard";
             this.checkBox_PreCard.Size = new System.Drawing.Size(15, 14);
             this.checkBox_PreCard.TabIndex = 2;
@@ -168,7 +169,7 @@
             // 
             this.textBox_CardNumber.Enabled = false;
             this.textBox_CardNumber.Location = new System.Drawing.Point(302, 85);
-            this.textBox_CardNumber.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox_CardNumber.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_CardNumber.Name = "textBox_CardNumber";
             this.textBox_CardNumber.Size = new System.Drawing.Size(195, 20);
             this.textBox_CardNumber.TabIndex = 5;
@@ -188,7 +189,7 @@
             // 
             this.checkBox_CardNumber.AutoSize = true;
             this.checkBox_CardNumber.Location = new System.Drawing.Point(284, 85);
-            this.checkBox_CardNumber.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.checkBox_CardNumber.Margin = new System.Windows.Forms.Padding(2);
             this.checkBox_CardNumber.Name = "checkBox_CardNumber";
             this.checkBox_CardNumber.Size = new System.Drawing.Size(15, 14);
             this.checkBox_CardNumber.TabIndex = 4;
@@ -200,7 +201,7 @@
             this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.progressBar1.Location = new System.Drawing.Point(9, 318);
-            this.progressBar1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.progressBar1.Margin = new System.Windows.Forms.Padding(2);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(487, 8);
             this.progressBar1.TabIndex = 5;
@@ -211,7 +212,7 @@
             // 
             this.textBox_Fullname.Enabled = false;
             this.textBox_Fullname.Location = new System.Drawing.Point(26, 85);
-            this.textBox_Fullname.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox_Fullname.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_Fullname.Name = "textBox_Fullname";
             this.textBox_Fullname.Size = new System.Drawing.Size(197, 20);
             this.textBox_Fullname.TabIndex = 0;
@@ -231,7 +232,7 @@
             // 
             this.textBox_Place.Enabled = false;
             this.textBox_Place.Location = new System.Drawing.Point(26, 189);
-            this.textBox_Place.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox_Place.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_Place.Name = "textBox_Place";
             this.textBox_Place.Size = new System.Drawing.Size(197, 20);
             this.textBox_Place.TabIndex = 1;
@@ -251,7 +252,7 @@
             // 
             this.textBox_Tel.Enabled = false;
             this.textBox_Tel.Location = new System.Drawing.Point(301, 136);
-            this.textBox_Tel.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox_Tel.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_Tel.Name = "textBox_Tel";
             this.textBox_Tel.Size = new System.Drawing.Size(197, 20);
             this.textBox_Tel.TabIndex = 1;
@@ -271,7 +272,7 @@
             // 
             this.textBox_Mob.Enabled = false;
             this.textBox_Mob.Location = new System.Drawing.Point(301, 189);
-            this.textBox_Mob.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox_Mob.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_Mob.Name = "textBox_Mob";
             this.textBox_Mob.Size = new System.Drawing.Size(197, 20);
             this.textBox_Mob.TabIndex = 1;
@@ -291,7 +292,7 @@
             // 
             this.textBox_Title.Enabled = false;
             this.textBox_Title.Location = new System.Drawing.Point(26, 136);
-            this.textBox_Title.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.textBox_Title.Margin = new System.Windows.Forms.Padding(2);
             this.textBox_Title.Name = "textBox_Title";
             this.textBox_Title.Size = new System.Drawing.Size(197, 20);
             this.textBox_Title.TabIndex = 1;
@@ -310,8 +311,8 @@
             // button_test
             // 
             this.button_test.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button_test.Location = new System.Drawing.Point(70, 329);
-            this.button_test.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_test.Location = new System.Drawing.Point(156, 330);
+            this.button_test.Margin = new System.Windows.Forms.Padding(2);
             this.button_test.Name = "button_test";
             this.button_test.Size = new System.Drawing.Size(121, 19);
             this.button_test.TabIndex = 8;
@@ -333,7 +334,7 @@
             // 
             this.button_test2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.button_test2.Location = new System.Drawing.Point(362, 329);
-            this.button_test2.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.button_test2.Margin = new System.Windows.Forms.Padding(2);
             this.button_test2.Name = "button_test2";
             this.button_test2.Size = new System.Drawing.Size(74, 19);
             this.button_test2.TabIndex = 7;
@@ -343,13 +344,25 @@
             // 
             // button_test3
             // 
-            this.button_test3.Location = new System.Drawing.Point(196, 329);
+            this.button_test3.Location = new System.Drawing.Point(282, 330);
             this.button_test3.Name = "button_test3";
             this.button_test3.Size = new System.Drawing.Size(44, 19);
             this.button_test3.TabIndex = 12;
             this.button_test3.Text = "test";
             this.button_test3.UseVisualStyleBackColor = true;
             this.button_test3.Click += new System.EventHandler(this.button_test3_Click);
+            // 
+            // button_cleanCard
+            // 
+            this.button_cleanCard.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.button_cleanCard.Location = new System.Drawing.Point(69, 330);
+            this.button_cleanCard.Margin = new System.Windows.Forms.Padding(2);
+            this.button_cleanCard.Name = "button_cleanCard";
+            this.button_cleanCard.Size = new System.Drawing.Size(83, 19);
+            this.button_cleanCard.TabIndex = 9;
+            this.button_cleanCard.Text = "Smazat Kartu";
+            this.button_cleanCard.UseVisualStyleBackColor = true;
+            this.button_cleanCard.Click += new System.EventHandler(this.button_cleanCard_Click);
             // 
             // Form1
             // 
@@ -380,12 +393,13 @@
             this.Controls.Add(this.textBox_PreCard);
             this.Controls.Add(this.textBox_Name);
             this.Controls.Add(this.richTextBox1);
+            this.Controls.Add(this.button_cleanCard);
             this.Controls.Add(this.button_clean);
             this.Controls.Add(this.button_test2);
             this.Controls.Add(this.button_test);
             this.Controls.Add(this.button_comfirm);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "PowerShell - Card Writer";
             this.ResumeLayout(false);
@@ -423,6 +437,7 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button button_test2;
         private System.Windows.Forms.Button button_test3;
+        private System.Windows.Forms.Button button_cleanCard;
     }
 }
 
