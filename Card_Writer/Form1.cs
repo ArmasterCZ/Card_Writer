@@ -16,7 +16,7 @@ namespace PowerShell_FormTest_1
 
     public partial class Form1 : Form
     {
-        public string verze = "1.5";
+        public string verze = "1.6";
         public Form1()
         {
             InitializeComponent();
@@ -373,8 +373,17 @@ namespace PowerShell_FormTest_1
                         powerShell.AddScript("Get-ADUser -filter 'otherPager -like " + '"' + user1.cardNumberFull + '"' + "' -Properties name, sAMAccountName, title, PhysicalDeliveryOfficeName, pager, otherPager, mobile, TelephoneNumber | select name, sAMAccountName, title, PhysicalDeliveryOfficeName, pager, mobile, TelephoneNumber, @{name=" + '"' + "otherPager" + '"' + ";expression={$_.otherPager -join " + '"' + ";" + '"' + "}}");
 
                         // Výsledky
+                        bool multipleResults = false;
                         foreach (PSObject result in powerShell.Invoke())
                         {
+                            //kontrola nalezení více výsledků
+                            if (multipleResults)
+                            {
+                                MessageBox.Show("Dané číslo nalezeno u více jak jednoho uživatele: " + user1.userNameAcco);
+                            }
+                            multipleResults = true;
+
+                            //získání informací z výsledku hledání
                             try { user1.userNameFull = result.Members["name"].Value.ToString(); } catch { }
                             try { user1.userNameAcco = result.Members["sAMAccountName"].Value.ToString(); } catch { }
                             try { user1.cardNumberFull = result.Members["otherPager"].Value.ToString(); } catch { }
@@ -382,6 +391,8 @@ namespace PowerShell_FormTest_1
                             try { user1.title = result.Members["title"].Value.ToString(); } catch { }
                             try { user1.tel = result.Members["TelephoneNumber"].Value.ToString(); } catch { }
                             try { user1.mob = result.Members["mobile"].Value.ToString(); } catch { }
+
+                            
                         }
                         richTextBox1.Text += Environment.NewLine + "(Hledani uživatele podle jména dokončeno.)";
                         powerShell.Runspace.Close();
