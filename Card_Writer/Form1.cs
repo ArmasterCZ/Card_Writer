@@ -11,12 +11,14 @@ using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using System.Collections.ObjectModel;
 
-namespace PowerShell_FormTest_1
+namespace Card_Writer
 {
 
     public partial class Form1 : Form
     {
-        public string verze = "1.6";
+        //public string verze = "1.8";
+        public string verze = Application.ProductVersion;
+
         public Form1()
         {
             InitializeComponent();
@@ -26,12 +28,9 @@ namespace PowerShell_FormTest_1
             toolTip1.SetToolTip(this.textBox_PreCard, "Zadej číslo karty v desítkové soustavě.");
             this.Text = "PowerShell - Card Writer V" + verze;
 
-            //TODO: zaskrtavatko usnadneni (automaticke odskrtavani v navaznosti na zašktnutí)
-            //úprava pro skupiny. (členi, poznámka, jméno)
+            //TODO:
             //zaskrtavatko na vypsani spusteneho skriptu. (mozna misto spusteni) = pomoc pokud by skript nesel spoustet mimo powershell
             //po zaškrtnutí přehodit kurzor do kolonky
-            //upravit zadávání více karet (výstup: 81AE04C30000081C;81AE04C300000706) pořeba udělat vstup a výstup z pole (pro každého člena přepočet a PS skript), upravit detekci délky.
-
         }
 
         //tlačítka
@@ -102,6 +101,23 @@ namespace PowerShell_FormTest_1
                     textBox_Name.Enabled = false;
                 }
             }
+            //button comfirm text
+            if (checkBox_Name.Checked)
+            {
+                if(checkBox_CardNumber.Checked | checkBox_PreCard.Checked)
+                {
+                    button_comfirm.Text = "Zapsat";
+                }
+                else
+                {
+                    button_comfirm.Text = "Najít";
+                }
+            }
+            else
+            {
+                button_comfirm.Text = "Najít";
+            }
+            
         }
 
         private void executeOrder(object sender, EventArgs e)
@@ -115,15 +131,19 @@ namespace PowerShell_FormTest_1
             bool XCardNumber = checkBox_CardNumber.Checked;
             ADuser_Class user1 = new ADuser_Class();
 
+            
             if (Xname)
             {
+                //Zaškrtlé: +jméno
                 if (checkIstEmpty(textBox_Name.Text,"jména"))
                 {
+                    //vyplněné jméno
                     user1.userNameAcco = textBox_Name.Text;
                     if (XpreCard | XCardNumber)
                     {
-                        //Zašrtlé: +jmeno +karta
+                        //Zaškrtlé: +jmeno +karta (jedna nebo druhá)
                         user1 = PS_GetOldCardNumber_UserName(user1);
+                        //převedení čísla karty do druhého formátu
                         if (XpreCard)
                         {
                             user1.cardNumberPre = textBox_PreCard.Text;
@@ -136,21 +156,42 @@ namespace PowerShell_FormTest_1
                         }
                         refreshTextBoxData(user1);
 
-                        if (checkIstEmpty(textBox_PreCard.Text, "karty"))
+                        //if (checkIstEmpty(textBox_PreCard.Text, "karty"))
+                        if (!(textBox_PreCard.Text == ""))
                         {
-                            //string textMessage = "Opravdu chcete změnit číslo karty u uživatele " + user1.userName + "\n" + "Z karty -    " + user1.cardNumberOld + "\n" + "Na kartu - " + user1.cardNumber + "?";
+                            //vyplněná karta
+
+                            //pokus o nalezení karty (aby nebyla zapsána duplicita)
+                            ADuser_Class user2 = PS_SearchUser_CardNumber(user1);
+                            if (user2.userNameFull != "")
+                            {
+                                MessageBox.Show(string.Format("Karta byla již nalezena u uživatele {0}.", user2.userNameFull),"Pozor",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                            }
+
+                            //zapsání karty k uživately
                             string textMessage = string.Format("Opravdu chcete změnit číslo karty u uživatele {0} \nZ karty    - {1}\nNa kartu - {2}?", user1.userNameAcco, user1.cardNumberOld, user1.cardNumberFull);
                             DialogResult result1 = MessageBox.Show(textMessage, "", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                             if (result1 == DialogResult.Yes)
                             {
-                                //Požadavek na změnu čísla karty
+                                //Textbox ano na změnu čísla karty
                                 PS_WriteNewCardNumber_userName(user1);
                             }
+                        } else
+                        {
+                            //prázdná karta
+                            string textMessage = string.Format("Opravdu chcete SMAZAT číslo karty u uživatele {0} \nZ karty    - {1}", user1.userNameAcco, user1.cardNumberOld);
+                            DialogResult result1 = MessageBox.Show(textMessage, "", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                            if (result1 == DialogResult.Yes)
+                            {
+                                //Textbox ano na smazání čísla karty
+                                PS_ClearCard_userName(user1);
+                            }
+                            
                         }
                     }
                     else
                     {
-                        //Zašrtlé: +jmeno
+                        //Zaškrtlé: +jmeno
                         textBox_Name.Text = user1.userNameAcco;
                         user1 = PS_SearchUser_UserName(user1);
                         refreshTextBoxData(user1);
@@ -159,7 +200,7 @@ namespace PowerShell_FormTest_1
             }
             else
             {
-                //Zašrtlé: -jmeno +karta
+                //Zaškrtlé: -jmeno +karta
                 if (XpreCard | XCardNumber)
                 {
                     //Vyhledaní uživatele podle čísla karty
@@ -184,7 +225,7 @@ namespace PowerShell_FormTest_1
                 }
                 else
                 {
-                    //Zašrtlé: -jmeno -karta
+                    //Zaškrtlé: -jmeno -karta
                     richTextBox1.Text = "(Nebyla vybrána žádná volba. Zašktněte nějaké políčko.)";
                 }
             }
@@ -194,19 +235,6 @@ namespace PowerShell_FormTest_1
             if (Xname & XpreCard)
             {
                 checkBox_Name.Checked = false;
-            }
-        }
-
-        private void button_cleanCard_Click(object sender, EventArgs e)
-        {
-            ADuser_Class user1 = new ADuser_Class();
-            string accountName = textBox_Name.Text;
-            if(accountName != "") {
-                user1.userNameAcco = accountName;
-                PS_ClearCard_userName(user1);
-            }
-            else {
-                MessageBox.Show("Doplň jméno.");
             }
         }
 
@@ -248,7 +276,7 @@ namespace PowerShell_FormTest_1
             {
                 finalNumber = number.ToString("X");
             }
-            catch (Exception exe)
+            catch
             {
                 //throw new Exception(String.Format("Error: metoda - {0}. {1}. ", System.Reflection.MethodBase.GetCurrentMethod().Name, "Číslo je null"));
                 finalNumber = "";
@@ -329,7 +357,7 @@ namespace PowerShell_FormTest_1
                         //Get-ADUser -filter 'sAMAccountName -like $ADuser' -Properties PhysicalDeliveryOfficeName, title, sAMAccountName | Format-table Name, sAMAccountName,PhysicalDeliveryOfficeName, Title
                         powerShell.Runspace = runspace;
                         powerShell.Runspace.Open();
-
+                        //Import-Module ActiveDirectory; 
                         powerShell.AddScript("Get-ADUser -filter 'sAMAccountName -like " + '"' + user1.userNameAcco + '"' + "' -Properties name, sAMAccountName, title, PhysicalDeliveryOfficeName, pager, otherPager, mobile, TelephoneNumber | select name, sAMAccountName, title, PhysicalDeliveryOfficeName, pager, mobile, TelephoneNumber, @{name=" + '"' + "otherPager" + '"' + ";expression={$_.otherPager -join " + '"' + ";" + '"' + "}}");
 
                         // Výsledky
@@ -593,7 +621,7 @@ namespace PowerShell_FormTest_1
                 richTextBox1.Text += Environment.NewLine + "-------ERROR------";
                 richTextBox1.Text += Environment.NewLine + e.Message;
                 richTextBox1.Text += Environment.NewLine + e.HelpLink;
-                richTextBox1.Text += Environment.NewLine + e.HResult;
+                //richTextBox1.Text += Environment.NewLine + e.HResult;
                 richTextBox1.Text += Environment.NewLine + e.InnerException;
                 richTextBox1.Text += Environment.NewLine + e.TargetSite;
                 richTextBox1.Text += Environment.NewLine + "-------StackTrace------";
@@ -676,7 +704,7 @@ namespace PowerShell_FormTest_1
                 richTextBox1.Text += Environment.NewLine + "-------ERROR------";
                 richTextBox1.Text += Environment.NewLine + e.Message;
                 richTextBox1.Text += Environment.NewLine + e.HelpLink;
-                richTextBox1.Text += Environment.NewLine + e.HResult;
+                //richTextBox1.Text += Environment.NewLine + e.HResult;
                 richTextBox1.Text += Environment.NewLine + e.InnerException;
                 richTextBox1.Text += Environment.NewLine + e.TargetSite;
                 richTextBox1.Text += Environment.NewLine + "-------StackTrace------";
@@ -692,10 +720,10 @@ namespace PowerShell_FormTest_1
             {
                 converter_Dec_To_Hex(jedna);
             }
-            catch (Exception exe)
+            catch (Exception exce)
             {
 
-                MessageBox.Show(exe.Message);
+                MessageBox.Show(exce.Message);
             }
 
             DialogResult result1 = MessageBox.Show("Totoje test funkčnosti PowerShelového skriptu. Chceš otestovat AD skript (Ano) nebo normální skript (Ne)", "", MessageBoxButtons.YesNoCancel, MessageBoxIcon.Question);
@@ -714,11 +742,18 @@ namespace PowerShell_FormTest_1
 
         }
 
-        private void button_test3_Click(object sender, EventArgs e)
+        /*private void button_cleanCard_Click(object sender, EventArgs e)
         {
-            //PS_TestScript2();
-            PS_TestScriptAD2();
-        }
+            ADuser_Class user1 = new ADuser_Class();
+            string accountName = textBox_Name.Text;
+            if(accountName != "") {
+                user1.userNameAcco = accountName;
+                PS_ClearCard_userName(user1);
+            }
+            else {
+                MessageBox.Show("Doplň jméno.");
+            }
+        }*/
 
     }
 }

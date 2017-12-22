@@ -1,4 +1,4 @@
-﻿namespace PowerShell_FormTest_1
+﻿namespace Card_Writer
 {
     partial class Form1
     {
@@ -57,20 +57,18 @@
             this.button_test = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
             this.button_test2 = new System.Windows.Forms.Button();
-            this.button_test3 = new System.Windows.Forms.Button();
-            this.button_cleanCard = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button_comfirm
             // 
             this.button_comfirm.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_comfirm.Font = new System.Drawing.Font("Microsoft Sans Serif", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.button_comfirm.Location = new System.Drawing.Point(440, 329);
+            this.button_comfirm.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.button_comfirm.Location = new System.Drawing.Point(409, 329);
             this.button_comfirm.Margin = new System.Windows.Forms.Padding(2);
             this.button_comfirm.Name = "button_comfirm";
-            this.button_comfirm.Size = new System.Drawing.Size(56, 19);
+            this.button_comfirm.Size = new System.Drawing.Size(87, 25);
             this.button_comfirm.TabIndex = 6;
-            this.button_comfirm.Text = "Potvrdit";
+            this.button_comfirm.Text = "Najít";
             this.button_comfirm.UseVisualStyleBackColor = true;
             this.button_comfirm.Click += new System.EventHandler(this.executeOrder);
             // 
@@ -89,12 +87,12 @@
             // button_clean
             // 
             this.button_clean.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button_clean.Location = new System.Drawing.Point(9, 329);
+            this.button_clean.Location = new System.Drawing.Point(9, 330);
             this.button_clean.Margin = new System.Windows.Forms.Padding(2);
             this.button_clean.Name = "button_clean";
-            this.button_clean.Size = new System.Drawing.Size(56, 19);
+            this.button_clean.Size = new System.Drawing.Size(105, 24);
             this.button_clean.TabIndex = 9;
-            this.button_clean.Text = "Smazat";
+            this.button_clean.Text = "Vyčistit kolonky";
             this.button_clean.UseVisualStyleBackColor = true;
             this.button_clean.Click += new System.EventHandler(this.button_clean_Click);
             // 
@@ -311,13 +309,14 @@
             // button_test
             // 
             this.button_test.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button_test.Location = new System.Drawing.Point(156, 330);
+            this.button_test.Location = new System.Drawing.Point(206, 329);
             this.button_test.Margin = new System.Windows.Forms.Padding(2);
             this.button_test.Name = "button_test";
-            this.button_test.Size = new System.Drawing.Size(121, 19);
+            this.button_test.Size = new System.Drawing.Size(121, 24);
             this.button_test.TabIndex = 8;
             this.button_test.Text = "Otestovat funkčnost";
             this.button_test.UseVisualStyleBackColor = true;
+            this.button_test.Visible = false;
             this.button_test.Click += new System.EventHandler(this.button_test_Click);
             // 
             // label9
@@ -333,36 +332,15 @@
             // button_test2
             // 
             this.button_test2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button_test2.Location = new System.Drawing.Point(362, 329);
+            this.button_test2.Location = new System.Drawing.Point(331, 329);
             this.button_test2.Margin = new System.Windows.Forms.Padding(2);
             this.button_test2.Name = "button_test2";
-            this.button_test2.Size = new System.Drawing.Size(74, 19);
+            this.button_test2.Size = new System.Drawing.Size(74, 25);
             this.button_test2.TabIndex = 7;
             this.button_test2.Text = "vypsat data";
             this.button_test2.UseVisualStyleBackColor = true;
+            this.button_test2.Visible = false;
             this.button_test2.Click += new System.EventHandler(this.TextBoxData_To_Console);
-            // 
-            // button_test3
-            // 
-            this.button_test3.Location = new System.Drawing.Point(282, 330);
-            this.button_test3.Name = "button_test3";
-            this.button_test3.Size = new System.Drawing.Size(44, 19);
-            this.button_test3.TabIndex = 12;
-            this.button_test3.Text = "test";
-            this.button_test3.UseVisualStyleBackColor = true;
-            this.button_test3.Click += new System.EventHandler(this.button_test3_Click);
-            // 
-            // button_cleanCard
-            // 
-            this.button_cleanCard.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button_cleanCard.Location = new System.Drawing.Point(69, 330);
-            this.button_cleanCard.Margin = new System.Windows.Forms.Padding(2);
-            this.button_cleanCard.Name = "button_cleanCard";
-            this.button_cleanCard.Size = new System.Drawing.Size(83, 19);
-            this.button_cleanCard.TabIndex = 9;
-            this.button_cleanCard.Text = "Smazat Kartu";
-            this.button_cleanCard.UseVisualStyleBackColor = true;
-            this.button_cleanCard.Click += new System.EventHandler(this.button_cleanCard_Click);
             // 
             // Form1
             // 
@@ -370,7 +348,6 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(506, 358);
-            this.Controls.Add(this.button_test3);
             this.Controls.Add(this.progressBar1);
             this.Controls.Add(this.checkBox_CardNumber);
             this.Controls.Add(this.checkBox_PreCard);
@@ -393,7 +370,6 @@
             this.Controls.Add(this.textBox_PreCard);
             this.Controls.Add(this.textBox_Name);
             this.Controls.Add(this.richTextBox1);
-            this.Controls.Add(this.button_cleanCard);
             this.Controls.Add(this.button_clean);
             this.Controls.Add(this.button_test2);
             this.Controls.Add(this.button_test);
@@ -436,8 +412,6 @@
         private System.Windows.Forms.Button button_test;
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.Button button_test2;
-        private System.Windows.Forms.Button button_test3;
-        private System.Windows.Forms.Button button_cleanCard;
     }
 }
 
