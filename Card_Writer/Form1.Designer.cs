@@ -151,6 +151,7 @@
             this.checkBox_Name.TabIndex = 11;
             this.checkBox_Name.UseVisualStyleBackColor = true;
             this.checkBox_Name.CheckedChanged += new System.EventHandler(this.checkBox_comfirm_Click);
+            this.checkBox_Name.Click += new System.EventHandler(this.checkBox_Click);
             // 
             // checkBox_PreCard
             // 
@@ -162,6 +163,7 @@
             this.checkBox_PreCard.TabIndex = 2;
             this.checkBox_PreCard.UseVisualStyleBackColor = true;
             this.checkBox_PreCard.CheckedChanged += new System.EventHandler(this.checkBox_comfirm_Click);
+            this.checkBox_PreCard.Click += new System.EventHandler(this.checkBox_Click);
             // 
             // textBox_CardNumber
             // 
@@ -193,6 +195,7 @@
             this.checkBox_CardNumber.TabIndex = 4;
             this.checkBox_CardNumber.UseVisualStyleBackColor = true;
             this.checkBox_CardNumber.CheckedChanged += new System.EventHandler(this.checkBox_comfirm_Click);
+            this.checkBox_CardNumber.Click += new System.EventHandler(this.checkBox_Click);
             // 
             // progressBar1
             // 
@@ -377,7 +380,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
-            this.Text = "PowerShell - Card Writer";
+            this.Text = "Card Writer";
             this.ResumeLayout(false);
             this.PerformLayout();
 

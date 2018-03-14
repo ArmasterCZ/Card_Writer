@@ -10,13 +10,12 @@ using System.Windows.Forms;
 using System.Management.Automation;
 using System.Management.Automation.Runspaces;
 using System.Collections.ObjectModel;
-
+using System.IO;
 namespace Card_Writer
 {
 
     public partial class Form1 : Form
     {
-        //public string verze = "1.8";
         public string verze = Application.ProductVersion;
 
         public Form1()
@@ -26,11 +25,7 @@ namespace Card_Writer
             toolTip1.SetToolTip(this.label2, "Desítková soustava.");
             toolTip1.SetToolTip(this.textBox_Name, "Zadej jméno uživatele.");
             toolTip1.SetToolTip(this.textBox_PreCard, "Zadej číslo karty v desítkové soustavě.");
-            this.Text = "PowerShell - Card Writer V" + verze;
-
-            //TODO:
-            //zaskrtavatko na vypsani spusteneho skriptu. (mozna misto spusteni) = pomoc pokud by skript nesel spoustet mimo powershell
-            //po zaškrtnutí přehodit kurzor do kolonky
+            this.Text = "Card Writer V" + verze;
         }
 
         //tlačítka
@@ -131,7 +126,6 @@ namespace Card_Writer
             bool XCardNumber = checkBox_CardNumber.Checked;
             ADuser_Class user1 = new ADuser_Class();
 
-            
             if (Xname)
             {
                 //Zaškrtlé: +jméno
@@ -238,6 +232,36 @@ namespace Card_Writer
             }
         }
 
+        private void checkBox_Click(object sender, EventArgs e)
+        {
+            //přehodí kurzor do textboxu vedle checkBoxu
+
+            try
+            {
+                CheckBox selectedCheckBox = (CheckBox)sender;
+
+                if ((selectedCheckBox.Name).Equals("checkBox_Name"))
+                {
+                    textBox_Name.Select();
+                    textBox_Name.SelectAll();
+                }
+                else if((selectedCheckBox.Name).Equals("checkBox_PreCard"))
+                {
+                    textBox_PreCard.Select();
+                    textBox_PreCard.SelectAll();
+                }
+                else if ((selectedCheckBox.Name).Equals("checkBox_CardNumber"))
+                {
+                    textBox_CardNumber.Select();
+                    textBox_CardNumber.SelectAll();
+                }
+                
+            }
+            catch (Exception)
+            {
+            }
+        }
+
         //příkazy
 
         private void refreshTextBoxData (ADuser_Class user1)
@@ -252,6 +276,25 @@ namespace Card_Writer
             //textBox_PreCard.Text = user1.cardNumberPre;
             //if (user1.cardNumberFull != "")
             textBox_PreCard.Text = converter_CardNumber_to_Dec(user1.cardNumberFull);
+        }
+
+        private void logIt(string message)
+        {
+            try
+            {
+                using (StreamWriter sw = new StreamWriter("Log.txt", true))
+                {
+                    sw.WriteLine("Dne: " + DateTime.Now.ToString());
+                    //sw.WriteLine("Zapis karty k: ");
+                    sw.WriteLine(message);
+                    sw.WriteLine("");
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+
         }
 
         private bool checkIstEmpty(string imput, string message)
@@ -483,6 +526,7 @@ namespace Card_Writer
                     else
                     {
                         richTextBox1.Text += Environment.NewLine + "(Zapsání karty uživatele dokončeno)";
+                        logIt(string.Format("Zapis karty k {0}, z karty {1}, na kartu {2}", user1.userNameAcco, user1.cardNumberOld, user1.cardNumberFull));
                     }
                     powerShell.Runspace.Close();
                 }
@@ -512,6 +556,7 @@ namespace Card_Writer
                     else
                     {
                         richTextBox1.Text += Environment.NewLine + "(Mazání karty uživatele dokončeno)";
+                        logIt(string.Format("Smazání karty od {0}, z karty {1} ", user1.userNameAcco, user1.cardNumberOld));
                     }
                     powerShell.Runspace.Close();
                 }
@@ -739,6 +784,14 @@ namespace Card_Writer
             {
 
             }
+
+            /*
+            using (StreamWriter sw = new StreamWriter ("Log.txt", true ))
+            {
+                sw.WriteLine("Dne: " + DateTime.Now.ToString());
+                sw.WriteLine("Zapis karty k: " );
+                sw.WriteLine("");
+            }*/
 
         }
 
