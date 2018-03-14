@@ -150,26 +150,39 @@ namespace Card_Writer
                         }
                         refreshTextBoxData(user1);
 
-                        //if (checkIstEmpty(textBox_PreCard.Text, "karty"))
                         if (!(textBox_PreCard.Text == ""))
                         {
                             //vyplněná karta
 
-                            //pokus o nalezení karty (aby nebyla zapsána duplicita)
+                            //pokus o nalezení duplicitní karty
                             ADuser_Class user2 = PS_SearchUser_CardNumber(user1);
                             if (user2.userNameFull != "")
                             {
-                                MessageBox.Show(string.Format("Karta byla již nalezena u uživatele {0}.", user2.userNameFull),"Pozor",MessageBoxButtons.OK,MessageBoxIcon.Warning);
+                                DialogResult dialogResult = MessageBox.Show(
+                                    string.Format("Kartu již má uživatel {0} ({1}).\nNejdříve mu kartu smažte, pokud ji chcete zapsat někomu jinému.", user2.userNameFull, user2.userNameAcco), 
+                                    "Pozor karta je již zabrána", MessageBoxButtons.OKCancel, MessageBoxIcon.Warning);
+
+                                if (dialogResult == DialogResult.OK)
+                                {
+                                    //vyplnění jména hledaného uživatele + zrušení operace
+                                    resetFormDisplay();
+                                    textBox_Name.Text = user2.userNameAcco;
+                                    return;
+                                }
+                                MessageBox.Show("Operace zapsání karty byla přerušena.");
+                            }
+                            else
+                            {
+                                //zapsání karty k uživately
+                                string textMessage = string.Format("Opravdu chcete změnit číslo karty u uživatele {0} \nZ karty    - {1}\nNa kartu - {2}?", user1.userNameAcco, user1.cardNumberOld, user1.cardNumberFull);
+                                DialogResult result1 = MessageBox.Show(textMessage, "", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                                if (result1 == DialogResult.Yes)
+                                {
+                                    //Textbox ano na změnu čísla karty
+                                    PS_WriteNewCardNumber_userName(user1);
+                                }
                             }
 
-                            //zapsání karty k uživately
-                            string textMessage = string.Format("Opravdu chcete změnit číslo karty u uživatele {0} \nZ karty    - {1}\nNa kartu - {2}?", user1.userNameAcco, user1.cardNumberOld, user1.cardNumberFull);
-                            DialogResult result1 = MessageBox.Show(textMessage, "", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                            if (result1 == DialogResult.Yes)
-                            {
-                                //Textbox ano na změnu čísla karty
-                                PS_WriteNewCardNumber_userName(user1);
-                            }
                         } else
                         {
                             //prázdná karta
@@ -180,7 +193,6 @@ namespace Card_Writer
                                 //Textbox ano na smazání čísla karty
                                 PS_ClearCard_userName(user1);
                             }
-                            
                         }
                     }
                     else
@@ -263,6 +275,19 @@ namespace Card_Writer
         }
 
         //příkazy
+        private void resetFormDisplay()
+        {
+            textBox_Name.Text = "";
+            textBox_Fullname.Text = "";
+            textBox_PreCard.Text = "";
+            textBox_CardNumber.Text = "";
+            textBox_Mob.Text = "";
+            textBox_Tel.Text = "";
+            textBox_Title.Text = "";
+            textBox_Place.Text = "";
+            checkBox_Name.Checked = true;
+            checkBox_PreCard.Checked = true;
+        }
 
         private void refreshTextBoxData (ADuser_Class user1)
         {
